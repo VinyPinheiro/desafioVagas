@@ -1,0 +1,14 @@
+language: ruby
+services:
+- postgresql
+before_script:
+  - psql -c 'create database vagas_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
+script:
+- bundle install
+- RAILS_ENV=test bundle exec rails db:migrate
+rvm:
+- 2.5.3
+branches:
+  only:
+  - /.*/
