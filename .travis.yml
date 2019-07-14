@@ -9,6 +9,7 @@ script:
 - RAILS_ENV=test bundle exec rails db:migrate
 - bundle exec rubocop -D
 - bundle exec rspec
+- bundle exec brakeman -A 
 rvm:
 - 2.5.3
 branches:

@@ -35,6 +35,7 @@ group :development, :test do
   gem 'rspec-json_expectations'
   gem 'simplecov', require: false
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'brakeman', :require => false
 end
 
 group :development do
