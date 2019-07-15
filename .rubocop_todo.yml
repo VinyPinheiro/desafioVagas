@@ -1,0 +1,10 @@
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'app/**/*'
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'app/**/*'
+    - 'config.ru'
