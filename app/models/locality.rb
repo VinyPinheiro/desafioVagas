@@ -1,4 +1,6 @@
 class Locality < ApplicationRecord
+  has_many :person
+
   LOCAL_ONE_CANT_BLANK = 'Preencha o primeiro nó'.freeze
   LOCAL_TWO_CANT_BLANK = 'Preencha o segundo nó'.freeze
   DISTANCE_CANT_BLANK = 'Preencha a distância'.freeze
