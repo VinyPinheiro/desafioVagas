@@ -2,6 +2,7 @@ class Edge < ApplicationRecord
   has_many :distance, foreign_key: 'src_id'
   has_many :distance, foreign_key: 'dst_id'
   has_many :person
+  has_many :job
 
   NAME_CANT_BLANK = 'Preencha o nó'.freeze
   NAME_IS_UNIQUE = 'Nó ja existente'.freeze

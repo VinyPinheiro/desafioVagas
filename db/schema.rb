@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_16_005639) do
+ActiveRecord::Schema.define(version: 2019_07_16_012419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(version: 2019_07_16_005639) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "jobs", force: :cascade do |t|
+    t.string "company"
+    t.string "title"
+    t.string "description"
+    t.string "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "edge_id"
+    t.index ["edge_id"], name: "index_jobs_on_edge_id"
+  end
+
   create_table "people", force: :cascade do |t|
     t.string "name"
     t.string "occupation"
@@ -43,5 +54,6 @@ ActiveRecord::Schema.define(version: 2019_07_16_005639) do
 
   add_foreign_key "distances", "edges", column: "dst_id"
   add_foreign_key "distances", "edges", column: "src_id"
+  add_foreign_key "jobs", "edges"
   add_foreign_key "people", "edges"
 end
