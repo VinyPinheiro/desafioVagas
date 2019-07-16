@@ -1,5 +1,6 @@
 class Job < ApplicationRecord
   belongs_to :edge
+  has_many :application_for_job
 
   COMPANY_CANT_BLANK = 'Preencha o nome da Empresa'.freeze
   TITLE_CANT_BLANK = 'Preencha o titulo da vaga'.freeze

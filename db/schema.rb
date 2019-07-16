@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_16_012419) do
+ActiveRecord::Schema.define(version: 2019_07_16_015934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "application_for_jobs", force: :cascade do |t|
+    t.bigint "job_id"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_application_for_jobs_on_job_id"
+    t.index ["person_id"], name: "index_application_for_jobs_on_person_id"
+  end
 
   create_table "distances", force: :cascade do |t|
     t.bigint "src_id"
@@ -52,6 +61,8 @@ ActiveRecord::Schema.define(version: 2019_07_16_012419) do
     t.index ["edge_id"], name: "index_people_on_edge_id"
   end
 
+  add_foreign_key "application_for_jobs", "jobs"
+  add_foreign_key "application_for_jobs", "people"
   add_foreign_key "distances", "edges", column: "dst_id"
   add_foreign_key "distances", "edges", column: "src_id"
   add_foreign_key "jobs", "edges"

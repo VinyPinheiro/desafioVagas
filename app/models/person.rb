@@ -1,5 +1,6 @@
 class Person < ApplicationRecord
   belongs_to :edge
+  has_many :application_for_job
 
   NAME_CANT_BLANK = 'Preencha o nome da pessoa'.freeze
   OCCUPATION_CANT_BLANK = 'Preencha a profissão da pessoa'.freeze
