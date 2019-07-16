@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationForJob, type: :model do
-    describe 'Should create Person with' do
+    describe 'Should create ApplicationForJob with' do
       before(:each) do
         edgeA = Edge.create(name: 'A')
         @person = Person.new(name: 'teste', occupation: 'ocupacao teste',

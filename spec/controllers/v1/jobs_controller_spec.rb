@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe V1::JobsController, type: :controller do
 
-    describe 'Should create person with ' do
+    describe 'Should create job with ' do
       before(:each) do
           edge = Edge.create(name: 'A')
       end
