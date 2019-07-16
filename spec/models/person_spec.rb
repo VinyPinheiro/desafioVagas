@@ -3,8 +3,10 @@ require 'rails_helper'
 RSpec.describe Person, type: :model do
   describe 'Should create Locality with' do
     before(:each) do
-      local = Locality.create(local_one: 'A', local_two: 'B', distance: 5)
-      @people = Person.new(name: 'teste', occupation: 'ocupacao teste', locality: local, level: 1)
+      edgeA = Edge.create(name: 'A')
+      edgeB = Edge.create(name: 'B')
+      distance = Distance.new(src: edgeA, dst: edgeB, length: 5)
+      @people = Person.new(name: 'teste', occupation: 'ocupacao teste', distance: distance, level: 1)
     end
 
     it 'valid data' do
@@ -24,8 +26,8 @@ RSpec.describe Person, type: :model do
       expect(@people).to_not be_valid
     end
 
-    it 'null locality' do
-      @people.locality = nil
+    it 'null distance' do
+      @people.distance = nil
       @people.save()
       expect(@people).to_not be_valid
     end
