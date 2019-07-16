@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_16_005038) do
+ActiveRecord::Schema.define(version: 2019_07_16_005639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,25 +31,17 @@ ActiveRecord::Schema.define(version: 2019_07_16_005038) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "localities", force: :cascade do |t|
-    t.string "local_one"
-    t.string "local_two"
-    t.integer "distance"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "people", force: :cascade do |t|
     t.string "name"
     t.string "occupation"
     t.integer "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "distance_id"
-    t.index ["distance_id"], name: "index_people_on_distance_id"
+    t.bigint "edge_id"
+    t.index ["edge_id"], name: "index_people_on_edge_id"
   end
 
   add_foreign_key "distances", "edges", column: "dst_id"
   add_foreign_key "distances", "edges", column: "src_id"
-  add_foreign_key "people", "distances"
+  add_foreign_key "people", "edges"
 end

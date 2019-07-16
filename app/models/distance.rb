@@ -1,7 +1,6 @@
 class Distance < ApplicationRecord
   belongs_to :src, class_name: 'Edge'
   belongs_to :dst, class_name: 'Edge'
-  has_many :person
 
   LOCAL_ONE_CANT_BLANK = 'Preencha o primeiro nó'.freeze
   LOCAL_TWO_CANT_BLANK = 'Preencha o segundo nó'.freeze

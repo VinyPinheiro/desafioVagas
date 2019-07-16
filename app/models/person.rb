@@ -1,5 +1,5 @@
 class Person < ApplicationRecord
-  belongs_to :distance
+  belongs_to :edge
 
   NAME_CANT_BLANK = 'Preencha o nome da pessoa'.freeze
   OCCUPATION_CANT_BLANK = 'Preencha a profissão da pessoa'.freeze
@@ -9,7 +9,7 @@ class Person < ApplicationRecord
 
   validates :name, presence: { message: NAME_CANT_BLANK }
   validates :occupation, presence: { message: OCCUPATION_CANT_BLANK }
-  validates :distance, presence: { message: LOCALITY_CANT_BLANK }
+  validates :edge, presence: { message: LOCALITY_CANT_BLANK }
   validates :level, presence: { message: LEVEL_CANT_BLANK }
   validates :level, numericality: { message: LEVEL_IS_NUMERIC,
                                     only_integer: true,
