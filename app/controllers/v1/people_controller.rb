@@ -6,7 +6,10 @@ module V1
                           level: params[:nivel])
       person.edge = find_locality
       if person.save
-        render json: { failed: 0 }, status: 201
+        render json: { failed: 0,
+                       data: person.as_json(only: %i[id name occupation level],
+                                            include: [edge: { only: :name }]) },
+               status: 201
       else
         render json: { failed: 1, errors: person.errors }, status: 400
       end
