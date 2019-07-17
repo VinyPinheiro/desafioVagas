@@ -13,40 +13,42 @@ class Distance < ApplicationRecord
   validates :length, numericality: { message: DISTANCE_IS_NUMERIC,
                                      only_integer: true }
 
-  def shortest_path(edge_dst)
-    calculate(src, edge_dst)
-    @distances[edge_dst.name]
-  end
-
-  private
-
-  def calculate(src, dst)
-    return 0 if src == dst
-
-    @distances = {}
-    visited = {}
-    Distance.all.each do |vertex|
-      @distances[vertex.src.name] = Float::INFINITY # Infinity
-      visited[vertex.src.name] = false
+  class << self
+    def shortest_path(edge_src, edge_dst)
+      calculate(edge_src, edge_dst)
+      @distances[edge_dst.name]
     end
-    @distances[src.name] = 0
-    visited[src.name] = true
-    paths(dst, Distance.where(src: src), visited)
-    @distances
-  end
 
-  def paths(dst, connecteds, visited)
-    return if connecteds.nil?
+    private
 
-    connecteds.each do |vertex|
-      next if visited[vertex.dst.name]
+    def calculate(src, dst)
+      return 0 if src == dst
 
-      if @distances[vertex.dst.name] > @distances[vertex.src.name] + vertex.length
-        @distances[vertex.dst.name] = vertex.length + @distances[vertex.src.name]
+      @distances = {}
+      visited = {}
+      Distance.all.each do |vertex|
+        @distances[vertex.src.name] = Float::INFINITY # Infinity
+        visited[vertex.src.name] = false
       end
-      visited[vertex.dst.name] = true
-      paths(dst, Distance.where(src: vertex.dst), visited)
-      visited[vertex.dst.name] = false
+      @distances[src.name] = 0
+      visited[src.name] = true
+      paths(dst, Distance.where(src: src), visited)
+      @distances
+    end
+
+    def paths(dst, connecteds, visited)
+      return if connecteds.nil?
+
+      connecteds.each do |vertex|
+        next if visited[vertex.dst.name]
+
+        if @distances[vertex.dst.name] > @distances[vertex.src.name] + vertex.length
+          @distances[vertex.dst.name] = vertex.length + @distances[vertex.src.name]
+        end
+        visited[vertex.dst.name] = true
+        paths(dst, Distance.where(src: vertex.dst), visited)
+        visited[vertex.dst.name] = false
+      end
     end
   end
 end
