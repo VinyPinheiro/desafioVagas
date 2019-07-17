@@ -22,9 +22,9 @@ class Distance < ApplicationRecord
     private
 
     def calculate(src, dst)
-      return 0 if src == dst
-
       @distances = {}
+      return @distances[dst.name] = 0 if src == dst
+
       visited = {}
       Distance.all.each do |vertex|
         @distances[vertex.src.name] = Float::INFINITY # Infinity

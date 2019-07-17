@@ -11,7 +11,26 @@ module V1
       end
     end
 
+    def ranking
+      applications = ApplicationForJob.where(job_id: params[:id])
+                                      .sort_by(&:score).reverse
+      render json: prepare_data(applications)
+    end
+
     private
+
+    def prepare_data(applications)
+      hash = []
+      applications.each do |application|
+        person = application.person
+        hash << { nome: person.name,
+                  profissao: person.occupation,
+                  localizacao: person.edge.name,
+                  nivel: person.level,
+                  score: application.score }
+      end
+      hash
+    end
 
     def find_person
       Person.find_by(id: params[:id_pessoa])
