@@ -4,7 +4,7 @@ services:
     build: .
     restart: always
     ports:
-    - 3000:3000/tcp
+    - 9000:3000/tcp
     command:
     - bundle
     - exec
