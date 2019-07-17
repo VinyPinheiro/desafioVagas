@@ -7,7 +7,10 @@ module V1
                     level: params[:nivel])
       job.edge = find_locality
       if job.save
-        render json: { failed: 0 }, status: 201
+        render json: { failed: 0,
+                       data: job.as_json(only: %i[id company title description level],
+                                         include: [edge: { only: :name }]) },
+               status: 201
       else
         render json: { failed: 1, errors: job.errors }, status: 400
       end
