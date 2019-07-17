@@ -18,6 +18,8 @@ services:
     - ./:/vagas
     stdin_open: true
     tty: true
+    environment:
+      - LANG=C.UTF-8
     depends_on:
       - postgres
   postgres:
