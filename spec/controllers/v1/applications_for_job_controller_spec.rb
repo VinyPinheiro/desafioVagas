@@ -44,6 +44,65 @@ RSpec.describe V1::ApplicationsForJobController, type: :controller do
       expect(response.body).to include_json(
         failed: 1)
     end
+  end
 
+  describe 'Should getting ranking ApplicationForJob' do
+    before(:each) do
+      a = Edge.create(name: 'A')
+      b = Edge.create(name: 'B')
+      c = Edge.create(name: 'C')
+      d = Edge.create(name: 'D')
+      e = Edge.create(name: 'E')
+      f = Edge.create(name: 'F')
+
+      Distance.create(src: a, dst: b, length: 5)
+      Distance.create(src: b, dst: a, length: 5)
+
+      Distance.create(src: b, dst: c, length: 7)
+      Distance.create(src: c, dst: b, length: 7)
+
+      Distance.create(src: b, dst: d, length: 3)
+      Distance.create(src: d, dst: b, length: 3)
+
+      Distance.create(src: c, dst: e, length: 4)
+      Distance.create(src: e, dst: c, length: 4)
+
+      Distance.create(src: d, dst: e, length: 10)
+      Distance.create(src: e, dst: d, length: 10)
+
+      Distance.create(src: d, dst: f, length: 8)
+      Distance.create(src: f, dst: d, length: 8)
+
+      @job = Job.create(company: 'teste', title: 'ocupacao teste',
+                        description: 'Descrição teste', edge: a, level: 4)
+      @person1 = Person.create(name: 'Mary Jane', occupation: 'Engenheira de Software', edge: a, level: 4)
+      @person2 = Person.create(name: 'John Doe', occupation: 'Engenheira de Software', edge: c, level: 2)
+
+    end
+
+    it 'register with desc order' do
+      require 'json'
+      ApplicationForJob.create(job: @job, person: @person2)
+      ApplicationForJob.create(job: @job, person: @person1)
+      get :ranking, params: { id: @job.id }
+
+      expect(response).to have_http_status(200)
+      expected_hash
+    end
+
+    it 'register with cres order' do
+      require 'json'
+      ApplicationForJob.create(job: @job, person: @person1)
+      ApplicationForJob.create(job: @job, person: @person2)
+      get :ranking, params: { id: @job.id }
+
+      expect(response).to have_http_status(200)
+      expected_hash
+    end
+
+    def expected_hash
+      expect(JSON.parse(response.body)[0]['nome']).to eq(@person1.name)
+      expect(JSON.parse(response.body)[1]['nome']).to eq(@person2.name)
+    end
   end
 end

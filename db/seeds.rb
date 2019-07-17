@@ -13,8 +13,19 @@ e = Edge.create(name: 'E')
 f = Edge.create(name: 'F')
 
 Distance.create(src: a, dst: b, length: 5)
+Distance.create(src: b, dst: a, length: 5)
+
 Distance.create(src: b, dst: c, length: 7)
+Distance.create(src: c, dst: b, length: 7)
+
 Distance.create(src: b, dst: d, length: 3)
+Distance.create(src: d, dst: b, length: 3)
+
 Distance.create(src: c, dst: e, length: 4)
+Distance.create(src: e, dst: c, length: 4)
+
 Distance.create(src: d, dst: e, length: 10)
+Distance.create(src: e, dst: d, length: 10)
+
 Distance.create(src: d, dst: f, length: 8)
+Distance.create(src: f, dst: d, length: 8)
